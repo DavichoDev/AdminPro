@@ -65,7 +65,7 @@
     ],
     "no-empty": false,
     "no-inferrable-types": [
-      false,
+      true,
       "ignore-params"
     ],
     "no-non-null-assertion": true,
@@ -94,10 +94,6 @@
         "named": "never"
       }
     },
-    "typedef": [
-      false,
-      "call-signature"
-    ],
     "typedef-whitespace": {
       "options": [
         {
@@ -135,7 +131,7 @@
     },
     "no-conflicting-lifecycle": true,
     "no-host-metadata-property": true,
-    "no-input-rename": false,
+    "no-input-rename": true,
     "no-inputs-metadata-property": true,
     "no-output-native": true,
     "no-output-on-prefix": true,
