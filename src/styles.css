@@ -20,3 +20,9 @@
     align-items: center;
     justify-content: center;
 }
+
+.img-avatar {
+    border-radius: 100%;
+    height: 200px;
+    width: 200px;
+}

@@ -49,8 +49,8 @@ export class LoginComponent implements OnInit {
         localStorage.removeItem( 'rememberMe');
       }
 
+      console.log( response );
       this.router.navigateByUrl('/');
-
     }, (err) => {
       Swal.fire('Error', err.error.msg, 'error');
     });
