@@ -1,0 +1,64 @@
+<div
+  class="fondo-modal-imagen animated fadeIn fast"
+  [class.oculto]="modalImagenService.ocultaModal"
+>
+  <div
+    class="modal fade show"
+    id="exampleModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalLabel1"
+    style="display: block"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="exampleModalLabel1">Cargar imágen</h4>
+
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+            (click)="cerrarModal()"
+          >
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h3>Seleccione una imagen</h3>
+          <!-- START Imagen del usuario -->
+          <div class="text-center">
+            <img
+              *ngIf="!imgTemp"
+              [src]="modalImagenService.img"
+              class="img-avatar"
+            />
+            <img *ngIf="imgTemp" [src]="imgTemp" class="img-avatar" />
+ 
+           </div>
+          <input
+            class="mb-3"
+            type="file"
+            (change)="actualizarFoto($event.target.files[0])"
+          />
+          <!-- END Imagen del usuario -->
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-default"
+            data-dismiss="modal"
+            (click)="cerrarModal()"
+          >
+            Cerrar
+          </button>
+
+          <button type="button" 
+                  class="btn btn-primary"
+                  (click)="subirImagen()">Cargar imagen</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

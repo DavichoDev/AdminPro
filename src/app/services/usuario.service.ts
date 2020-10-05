@@ -1,13 +1,16 @@
 import { Injectable, NgZone } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { tap, map, catchError } from 'rxjs/operators';
+import { tap, map, catchError, delay } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
+
+import Swal from 'sweetalert2';
 
 import { RegisterForm } from '../interfaces/register-form.interfaces';
 import { LoginForm } from '../interfaces/login-form.interfaces';
 import { Usuario } from '../models/usuario.model';
+import { GetUsuarios } from '../interfaces/cargar-usuarios.interface';
 
 const base_url = environment.base_url;
 
@@ -36,29 +39,12 @@ export class UsuarioService {
     return this.usuario.uid || '';
   }
 
-  googleInit() {
-    return new Promise((resolve) => {
-      gapi.load('auth2', () => {
-        // Retrieve the singleton for the GoogleAuth library and set up the client.
-        this.auth2 = gapi.auth2.init({
-          client_id:
-            '214723721086-f6ectim42nvbqvjgvngrtoh9mvjh0r7n.apps.googleusercontent.com',
-          cookiepolicy: 'single_host_origin',
-        });
-
-        resolve();
-      });
-    });
-  }
-
-  logOut() {
-    localStorage.removeItem('token');
-
-    this.auth2.signOut().then(() => {
-      this.ngZone.run(() => {
-        this.router.navigateByUrl('/login');
-      });
-    });
+  get headers() {
+    return {
+      headers: {
+        'x-token': this.token,
+      },
+    };
   }
 
   validarToken(): Observable<boolean> {
@@ -94,25 +80,78 @@ export class UsuarioService {
     );
   }
 
-  actualizarUsuario(data: { email: string; nombre: string, role: string }) {
+  actualizarUsuario(data: { email: string; nombre: string; role: string }) {
 
     data = {
-      ...data, 
+      ...data,
       role: this.usuario.role
-    };
+    }
 
-    return this.http.put(`${base_url}/usuarios/${ this.uid }`, data, {
-      headers: { 'x-token': this.token },
-    });
+    return this.http.put(
+      `${base_url}/usuarios/${this.uid}`,
+      data,
+      this.headers
+    );
   }
 
-  // {url}/auth/login
+  guardarUsuario( usuario: Usuario ) {
+    return this.http.put(
+      `${base_url}/usuarios/${this.uid}`,
+      usuario,
+      this.headers
+    );
+  }
+
+  eliminarUsuario(usuario: Usuario) {
+    const url = `${base_url}/usuarios/${usuario.uid}`;
+    return this.http.delete(url, this.headers);
+  }
+
+  // http://localhost:3000/api/usuarios
+  getUsuarios(desde: number = 0) {
+    const url = `${base_url}/usuarios?desde=${desde}`;
+    // Podemos definir el tipo de información que va a retornar la petición.
+    return this.http.get<GetUsuarios>(url, this.headers).pipe(
+      delay(500),
+      map((response) => {
+        const usuarios = response.usuarios.map(
+          (user) =>
+            new Usuario(
+              user.nombre,
+              user.email,
+              '',
+              user.uid,
+              user.role,
+              user.google,
+              user.img
+            )
+        );
+        console.log(usuarios);
+        return {
+          totalRegistros: response.totalRegistros,
+          usuarios,
+        };
+      })
+    );
+  }
+
+  // Autentificación || GoogleAuth
   login(formData: LoginForm) {
     return this.http.post(`${base_url}/auth/login`, formData).pipe(
       tap((resp: any) => {
         localStorage.setItem('token', resp.token);
       })
     );
+  }
+
+  logOut() {
+    localStorage.removeItem('token');
+
+    this.auth2.signOut().then(() => {
+      this.ngZone.run(() => {
+        this.router.navigateByUrl('/login');
+      });
+    });
   }
 
   loginGoogle(token) {
@@ -122,4 +161,22 @@ export class UsuarioService {
       })
     );
   }
+
+  googleInit() {
+    return new Promise((resolve) => {
+      gapi.load('auth2', () => {
+        // Retrieve the singleton for the GoogleAuth library and set up the client.
+        this.auth2 = gapi.auth2.init({
+          client_id:
+            '214723721086-f6ectim42nvbqvjgvngrtoh9mvjh0r7n.apps.googleusercontent.com',
+          cookiepolicy: 'single_host_origin',
+        });
+
+        resolve();
+      });
+    });
+  }
+
+
+
 }

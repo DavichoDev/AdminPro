@@ -47,7 +47,7 @@ export class PerfilComponent implements OnInit {
         );
       },
       (err) => {
-        Swal.fire('Error', err.error.msg , 'error');
+        Swal.fire('Error', err.error.msg, 'error');
       }
     );
   }
@@ -55,17 +55,16 @@ export class PerfilComponent implements OnInit {
   actualizarFoto(imagen: File) {
     this.imagenSubir = imagen;
 
-    if ( !imagen ) { 
-      return this.imgTemp = null;
-     }
+    if (!imagen) {
+      return (this.imgTemp = null);
+    }
 
     const reader = new FileReader();
-    reader.readAsDataURL( imagen );
+    reader.readAsDataURL(imagen);
 
     reader.onloadend = () => {
       this.imgTemp = reader.result;
-    }
-
+    };
   }
 
   subirImagen() {
@@ -73,11 +72,15 @@ export class PerfilComponent implements OnInit {
       .actualizarFoto(this.imagenSubir, 'usuarios', this.usuario.uid)
       /* Se pasa por referencia la imagen al objeto del servicio */
       .then((img) => {
-        this.usuario.img = img
-        Swal.fire('Actualización', '¡Imagen de usuario actualizada exitosamente!', 'success');
-      }
-      ).catch( err => {
-        Swal.fire('Error', err.error.msg , 'success');
+        this.usuario.img = img;
+        Swal.fire(
+          'Actualización',
+          '¡Imagen de usuario actualizada exitosamente!',
+          'success'
+        );
+      })
+      .catch((err) => {
+        Swal.fire('Error', err.error.msg, 'success');
       });
   }
 }
