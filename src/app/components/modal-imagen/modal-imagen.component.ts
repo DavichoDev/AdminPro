@@ -52,10 +52,8 @@ export class ModalImagenComponent implements OnInit {
           '¡Imagen de usuario actualizada exitosamente!',
           'success'
         );
-
         // Event emitter llamado.
         this.modalImagenService.cambioEnImagen.emit(img);
-
         this.cerrarModal();
       })
       .catch((err) => {

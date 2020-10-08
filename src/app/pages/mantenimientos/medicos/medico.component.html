@@ -1,0 +1,83 @@
+<div *ngIf="cargando" class="row animated fadeIn fast">
+    <div class="col-12">
+      <div class="alert alert-info text-center">
+        <h4 class="alert-heading">Cargando</h4>
+        <i class="fa fa-spin fa-refresh fa-2x"></i>
+        <p class="mb-0">Por favor espere</p>
+      </div>
+    </div>
+</div>
+<div *ngIf="!cargando" class="row">
+    <!-- Loading -->
+    <div class="col-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Medico</h4>
+                <h6 class="card-subtitle">Información</h6>
+                <form class="form p-t-20"
+                      [formGroup]="medicoForm"
+                      (submit)="guardarMedico()">
+                    <!-- Foto -->
+                    <div *ngIf="medicoSeleccionado" 
+                         class="form-group">
+                        <div class="input-group">
+                            <!-- IMG Foto -->
+                            <img class="w200 d-table ml-auto mr-auto"
+                                [src]="medicoSeleccionado.img | imagen:'medicos'"
+                                [alt]="medicoSeleccionado.nombre">
+                        </div>
+                    </div>
+                    <!-- Nombre -->
+                    <div class="form-group">
+                        <label for="exampleInputuname">Nombre</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="ti-user"></i>
+                            </div>
+                            <!-- INPUT Nombre -->
+                            <input type="text" 
+                                   formControlName="nombre"
+                                   class="form-control" 
+                                   id="exampleInputuname" 
+                                   placeholder="Username">
+                        </div>
+                    </div>
+                    <!-- Hospital -->
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Hospital</label>
+                        <div class="input-group">
+                            <!-- SELECT Hospital -->
+                            <select formControlName="hospital" 
+                                    class="form-control">
+                                <option value="">Seleccione Hospital</option>
+                                <option *ngFor="let hospital of hospitales" [value]="hospital._id">{{ hospital.nombre }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit"
+                            [disabled]="medicoForm.invalid" 
+                            class="btn btn-success waves-effect waves-light btn-block">
+                        Guardar Cambios
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-6" *ngIf="hospitalSeleccionado">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Hospital</h4>
+                <h6 class="card-subtitle">{{ hospitalSeleccionado.nombre }}</h6>
+
+                <div class="form-group row">
+                    <div class="input-group">
+                        <img class="img-thumbnail d-table ml-auto mr-auto"
+                            [src]="hospitalSeleccionado.img | imagen:'hospitales'"
+                            [alt]="hospitalSeleccionado.nombre">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

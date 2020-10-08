@@ -13,6 +13,9 @@ import { PerfilComponent } from './perfil/perfil.component';
 
 // Mantenimientos
 import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component';
+import { HospitalesComponent } from './mantenimientos/hospitales/hospitales.component';
+import { MedicosComponent } from './mantenimientos/medicos/medicos.component';
+import { MedicoComponent } from './mantenimientos/medicos/medico.component';
 
 const routes: Routes = [
     {
@@ -20,15 +23,18 @@ const routes: Routes = [
         component: PagesComponent,
         canActivate: [ AuthGuard ],
         children: [
-            { path: '',                 component: DashboardComponent   ,    data: { titulo: 'Dashboard'             } },
-            { path: 'progress',         component: ProgressComponent    ,    data: { titulo: 'Progress'              } },
-            { path: 'grafica1',         component: Grafica1Component    ,    data: { titulo: 'Grafica'               } },
-            { path: 'promesas',         component: PromesasComponent    ,    data: { titulo: 'Promesas'              } },
-            { path: 'rxjs',             component: RxjsComponent        ,    data: { titulo: 'RxJs'                  } },
-            { path: 'account-settings', component: AccountSettingsComponent, data: { titulo: 'Account Settings'      } },
-            { path: 'perfil',           component: PerfilComponent,          data: { titulo: 'Perfil de usuario'     } },
+            { path: '',                 component: DashboardComponent   ,    data: { titulo: 'Dashboard'                } },
+            { path: 'progress',         component: ProgressComponent    ,    data: { titulo: 'Progress'                 } },
+            { path: 'grafica1',         component: Grafica1Component    ,    data: { titulo: 'Grafica'                  } },
+            { path: 'promesas',         component: PromesasComponent    ,    data: { titulo: 'Promesas'                 } },
+            { path: 'rxjs',             component: RxjsComponent        ,    data: { titulo: 'RxJs'                     } },
+            { path: 'account-settings', component: AccountSettingsComponent, data: { titulo: 'Account Settings'         } },
+            { path: 'perfil',           component: PerfilComponent,          data: { titulo: 'Perfil de usuario'        } },
             /* Mantenimientos */
-            { path: 'usuarios',         component: UsuariosComponent,        data: { titulo: 'Usuarios de aplicación'} },
+            { path: 'usuarios',         component: UsuariosComponent,        data: { titulo: 'Usuarios de aplicación'   } },
+            { path: 'hospitales',       component: HospitalesComponent,      data: { titulo: 'Hospitales de aplicación' } },
+            { path: 'medicos',          component: MedicosComponent,         data: { titulo: 'Medicos de aplicación'    } },
+            { path: 'medico/:id',       component: MedicoComponent,          data: { titulo: 'Medicos de aplicación'    } },
         ]
     },
 ];

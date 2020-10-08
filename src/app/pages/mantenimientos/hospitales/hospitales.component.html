@@ -1,0 +1,109 @@
+<div class="row animated fadeIn fast">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Buscar hospital..."
+          (keyup)="buscar( txtTermino.value )"
+          #txtTermino
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Loading -->
+<div *ngIf="cargando" class="row animated fadeIn fast">
+  <div class="col-12">
+    <div class="alert alert-info text-center">
+      <h4 class="alert-heading">Cargando</h4>
+      <i class="fa fa-spin fa-refresh fa-2x"></i>
+      <p class="mb-0">Por favor espere</p>
+    </div>
+  </div>
+</div>
+
+<!-- Tabla -->
+<div *ngIf="!cargando" class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-8">
+            <h4 class="card-title">Hospitales ({{ hospitales.length }})</h4>
+            <h6 class="card-subtitle">
+              Hospitales registrados en mi aplicación
+            </h6>
+          </div>
+          <div class="col-4">
+            <div class="text-right mb-4">
+              <button class="btn btn-primary"
+                      (click)="abrirSweetAlert()">
+                <i class="fa fa-hospital-o"></i>
+                Crear Hospital
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th class="w100">Foto</th>
+                <th>Nombre</th>
+                <th class="text-nowrap w100">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- NgFor -->
+              <tr *ngFor="let hospital of hospitales">
+                <td>
+                  <!-- Imagen -->
+                  <img
+                    [src]="hospital.img | imagen: 'hospitales'"
+                    [alt]="hospital.nombre"
+                    class="avatar cursor"
+                    (click)="cambiarImagen( hospital )"
+                  />
+                </td>
+                <td>
+                    <!-- Nombre -->
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Nombre del hospital"
+                    [(ngModel)]="hospital.nombre"
+                  />
+                </td>
+                <!-- Acciones -->
+                <td class="text-nowrap text-center">
+                  <a
+                    (click)="guardarCambios( hospital )"
+                    data-toggle="tooltip"
+                    data-original-title="Guardar Cambios"
+                  >
+                    <i class="fa fa-save fa-2x cursor text-info m-r-10"></i>
+                  </a>
+                  <a
+                    (click)="eliminarHospital( hospital )"
+                    data-toggle="tooltip"
+                    data-original-title="Cerrar"
+                  >
+                    <i class="fa fa-close fa-2x cursor text-danger m-r-10"></i>
+                  </a>
+                </td>
+              </tr>
+              <!-- Fin ngFor -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- <button class="btn btn-secondary">Anteriores</button> -->
+        <!-- &nbsp; -->
+        <!-- <button class="btn btn-secondary">Siguientes</button> -->
+      </div>
+    </div>
+  </div>
+</div>

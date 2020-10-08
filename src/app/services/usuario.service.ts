@@ -107,7 +107,6 @@ export class UsuarioService {
     return this.http.delete(url, this.headers);
   }
 
-  // http://localhost:3000/api/usuarios
   getUsuarios(desde: number = 0) {
     const url = `${base_url}/usuarios?desde=${desde}`;
     // Podemos definir el tipo de información que va a retornar la petición.

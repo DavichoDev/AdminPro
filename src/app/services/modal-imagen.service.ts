@@ -16,7 +16,7 @@ export class ModalImagenService {
 
   public cambioEnImagen: EventEmitter<string> = new EventEmitter();
 
-  constructor( private http: HttpClient ) {}
+  constructor(private http: HttpClient) {}
 
   get ocultaModal() {
     return this.ocultarModal;
@@ -32,12 +32,11 @@ export class ModalImagenService {
     this.id = id;
     // this.img = img;
 
-    if ( img.includes('https') ) {
+    if (img.includes('https')) {
       this.img = img;
     } else {
-      this.img = `${ base_url }/uploads/${ tipo }/${ img }`;
+      this.img = `${base_url}/uploads/${tipo}/${img}`;
     }
-    console.log(img);
   }
 
   cerrarModal() {
