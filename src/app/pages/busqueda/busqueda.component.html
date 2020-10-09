@@ -1,0 +1,111 @@
+<div class="row animated fadeIn fast">
+    <!-- Columna Usuarios -->
+    <div class="col-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title">Usuarios</div>
+                <!-- Alerta -->
+                <div *ngIf="usuarios.length === 0"
+                     class="alert alert-info" 
+                     role="alert">
+                  <p class="mb-0">No hay usuarios con ese termino...</p>
+                </div> 
+                <!-- Tabla -->
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Avatar</th>
+                                <th>Nombre</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="animated fadeIn fast" *ngFor="let usuario of usuarios">
+                                <td>
+                                    <img class="w75" [src]="usuario.img | imagen:'usuarios'" alt="">
+                                </td>
+                                <td>
+                                    {{ usuario.nombre }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- End Table -->
+            </div>
+        </div>
+    </div>
+    <!-- Columna Médicos -->
+    <div class="col-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title">Médicos</div>
+                <!-- Alerta -->
+                <div *ngIf="medicos.length === 0"
+                     class="alert alert-info" 
+                     role="alert">
+                  <p class="mb-0">No hay médicos con ese termino...</p>
+                </div> 
+                <!-- Tabla -->
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Avatar</th>
+                                <th>Nombre</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="animated fadeIn fast" 
+                                *ngFor="let medico of medicos">
+                                <td>
+                                    <img class="w75" [src]="medico.img | imagen:'medicos'" alt="">
+                                </td>
+                                <td>
+                                    <a [routerLink]="['/dashboard/medico', medico._id]">{{ medico.nombre }}</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- End Table -->
+            </div>
+        </div>
+    </div>
+    <!-- Columna Hospitales -->
+    <div class="col-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title">Hospitales</div>
+                <!-- Alerta -->
+                <div *ngIf="hospitales.length === 0"
+                     class="alert alert-info" 
+                     role="alert">
+                  <p class="mb-0">No hay hospitales con ese termino...</p>
+                </div> 
+                <!-- Tabla -->
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Avatar</th>
+                                <th>Nombre</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="animated fadeIn fast" *ngFor="let hospital of hospitales">
+                                <td>
+                                    <img class="w75" [src]="hospital.img | imagen:'hospitales'" alt="">
+                                </td>
+                                <td>
+                                    {{ hospital.nombre }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- End Table -->
+            </div>
+        </div>
+    </div>
+</div>
